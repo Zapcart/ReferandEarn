@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Watch viral videos, share with friends, and collect coins to unlock exciting rewards. Join the ultimate entertainment rewards platform today.">
+    <meta name="keywords" content="entertainment rewards, watch videos earn coins, viral videos, share and earn, coin rewards platform">
+    <meta name="author" content="Entertainment Rewards Platform">
+    <meta property="og:title" content="Watch • Share • Collect Coins - Entertainment Rewards Platform">
+    <meta property="og:description" content="Watch viral videos, share with friends, and collect coins to unlock exciting rewards.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/repository/">
+    <meta property="og:image" content="https://yourusername.github.io/repository/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Watch • Share • Collect Coins">
+    <meta name="twitter:description" content="Watch viral videos, share with friends, and collect coins to unlock exciting rewards.">
+    <meta name="twitter:image" content="https://yourusername.github.io/repository/og-image.jpg">
+    <link rel="canonical" href="https://yourusername.github.io/repository/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Entertainment Rewards Platform",
+        "description": "Watch viral videos, share with friends, and collect coins to unlock exciting rewards.",
+        "url": "https://yourusername.github.io/repository/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://yourusername.github.io/repository/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    <title>Watch • Share • Collect Coins - Entertainment Rewards Platform</title>
+</head>
+<body>
+    <header class="top-bar" role="banner">
+        <div class="coin-display" role="status" aria-live="polite" aria-label="Current coin balance">
+            <span class="coin-icon" aria-hidden="true">🪙</span>
+            <span id="coinCount" aria-label="Coins">0</span>
+        </div>
+        <nav class="nav-buttons" role="navigation" aria-label="Main navigation">
+            <button class="earn-btn" onclick="window.location.href='earn.html'" aria-label="Go to earn coins page">
+                <span class="btn-icon">💰</span>
+                <span>Earn</span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="video-container" role="main">
+    <section id="videoPlayer" class="video-feed" aria-label="Video player">
+        <video id="currentVideo" autoplay muted loop playsinline preload="metadata" aria-label="Current video"></video>
+        
+        <div class="hero-overlay">
+            <h1>Watch • Share • Earn Coins</h1>
+            <p>Share videos, collect coins & withdraw rewards</p>
+        </div>
+        
+        <div class="video-controls" role="toolbar" aria-label="Video controls">
+            <button class="video-nav-btn prev-btn" onclick="videoSystem.previousVideo()" aria-label="Previous video">
+                <span aria-hidden="true">↑</span>
+            </button>
+            <button class="video-nav-btn next-btn" onclick="videoSystem.nextVideo()" aria-label="Next video">
+                <span aria-hidden="true">↓</span>
+            </button>
+        </div>
+    </section>
+    
+    <section id="adContainer" class="ad-container" style="display: none;" role="complementary" aria-label="Advertisement">
+        <div class="ad-content">
+            <p class="ad-label">Advertisement</p>
+            <div class="ad-placeholder" aria-label="Advertisement space">
+                <span>Ad Space (300x250)</span>
+            </div>
+            <button class="skip-ad-btn" onclick="skipAd()" aria-label="Skip advertisement">Skip Ad</button>
+        </div>
+    </section>
+    
+    <section class="seo-content" aria-label="About this platform">
+        <div class="seo-wrapper">
+            <h2 class="seo-title">Entertainment Rewards Platform</h2>
+            <p class="seo-description">
+                Join the ultimate entertainment experience where you can watch viral videos, share engaging content with friends, and collect coins to unlock exciting rewards. Our platform offers a seamless way to enjoy entertainment while earning rewards through simple actions. Discover trending content, build your coin collection, and redeem rewards - all in one premium entertainment destination.
+            </p>
+            <div class="seo-features">
+                <div class="feature-item">
+                    <span class="feature-icon">🎬</span>
+                    <span>Watch Viral Videos</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔗</span>
+                    <span>Share with Friends</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🪙</span>
+                    <span>Collect Coins</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎁</span>
+                    <span>Unlock Rewards</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+    <footer class="footer" role="contentinfo">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        <a href="terms.html" class="footer-link">Terms of Service</a>
+        <a href="earn.html" class="footer-link">Earn Coins</a>
+        <a href="withdraw.html" class="footer-link">Withdraw Rewards</a>
+    </nav>
+    <p class="copyright">© 2025 Entertainment Rewards Platform. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

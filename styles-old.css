@@ -1,0 +1,545 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0E0E10;
+    color: #FFFFFF;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Top Bar */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(14, 14, 16, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.coin-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #0E0E10;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    animation: coinGlow 2s ease-in-out infinite;
+}
+
+@keyframes coinGlow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 4px 25px rgba(255, 215, 0, 0.5); }
+}
+
+.coin-icon {
+    font-size: 18px;
+}
+
+.earn-btn, .home-btn, .back-btn {
+    background: #00C853;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.earn-btn:hover, .home-btn:hover, .back-btn:hover {
+    background: #00B74A;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+}
+
+/* Video Container */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.video-player {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+#currentVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Ad Container */
+.ad-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.ad-content {
+    text-align: center;
+    padding: 40px;
+}
+
+.ad-placeholder {
+    width: 300px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    color: #A0A0A0;
+}
+
+.skip-ad-btn {
+    background: #1E90FF;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.skip-ad-btn:hover {
+    background: #1873CC;
+    transform: translateY(-2px);
+}
+
+/* Earn Page */
+.earn-container {
+    min-height: 100vh;
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.earn-content {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.coin-balance {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.coin-balance h2 {
+    font-size: 18px;
+    color: #A0A0A0;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.balance-amount {
+    font-size: 48px;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.progress-section {
+    margin-bottom: 40px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 14px;
+    color: #A0A0A0;
+    text-align: center;
+}
+
+/* Action Cards */
+.action-cards {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.action-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.action-card:active {
+    transform: translateY(0);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.card-icon.whatsapp { background: #25D366; }
+.card-icon.telegram { background: #0088CC; }
+.card-icon.copy { background: #1E90FF; }
+.card-icon.bonus { background: #FFD700; }
+
+.card-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.card-content p {
+    font-size: 14px;
+    color: #FFD700;
+    font-weight: 600;
+}
+
+/* Withdraw Page */
+.withdraw-container {
+    min-height: 100vh;
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.withdraw-content {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.conversion-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.conversion-box h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.conversion-display {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.conversion-item {
+    text-align: center;
+}
+
+.coins-display, .rupee-display {
+    font-size: 36px;
+    font-weight: 700;
+    color: #FFD700;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.equals {
+    font-size: 24px;
+    font-weight: 600;
+    color: #A0A0A0;
+}
+
+.conversion-rate {
+    font-size: 14px;
+    color: #A0A0A0;
+}
+
+.requirements-section {
+    margin-bottom: 30px;
+}
+
+.requirements-section h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.check-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #00C853;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.withdraw-btn {
+    width: 100%;
+    background: #00C853;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.withdraw-btn:hover:not(:disabled) {
+    background: #00B74A;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 200, 83, 0.3);
+}
+
+.withdraw-btn:disabled {
+    background: #333;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.trust-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #A0A0A0;
+}
+
+.trust-icon {
+    font-size: 16px;
+}
+
+/* Legal Pages */
+.legal-container {
+    min-height: 100vh;
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.legal-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.legal-content h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.last-updated {
+    color: #A0A0A0;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.legal-section {
+    margin-bottom: 30px;
+}
+
+.legal-section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.legal-section p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #E0E0E0;
+}
+
+.legal-section ul {
+    margin-left: 20px;
+    color: #E0E0E0;
+}
+
+.legal-section li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* Ad Sections */
+.ad-section {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.ad-section .ad-placeholder {
+    width: 300px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    color: #A0A0A0;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 2000;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .top-bar {
+        padding: 0 15px;
+        height: 50px;
+    }
+    
+    .earn-container, .withdraw-container, .legal-container {
+        padding-top: 70px;
+    }
+    
+    .coin-display {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    
+    .balance-amount {
+        font-size: 36px;
+    }
+    
+    .conversion-display {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .equals {
+        transform: rotate(90deg);
+    }
+}
+
+/* Safe Area Padding */
+@supports (padding: max(0px)) {
+    .top-bar {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+    }
+    
+    .earn-content, .withdraw-content, .legal-content {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+    }
+}
+
+/* Smooth Transitions */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button, .action-card {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

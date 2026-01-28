@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Allow search engines to crawl all pages
+Allow: /index.html
+Allow: /earn.html
+Allow: /withdraw.html
+Allow: /privacy.html
+Allow: /terms.html
+Allow: /sitemap.xml
+
+# Block access to videos directory (to prevent direct video access)
+Disallow: /videos/
+
+# Block access to development and backup files
+Disallow: /*-old.*
+Disallow: /*-backup.*
+Disallow: /*.log
+Disallow: /*.tmp
+
+# Block access to configuration files
+Disallow: /config/
+Disallow: /.env
+Disallow: /.git/
+
+# Sitemap location
+Sitemap: https://yourusername.github.io/repository/sitemap.xml
+
+# Crawl delay (optional - be polite to servers)
+Crawl-delay: 1
