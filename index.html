@@ -50,22 +50,38 @@
         </nav>
     </header>
 
-    <main class="video-container" role="main">
-    <section id="videoPlayer" class="video-feed" aria-label="Video player">
-        <video id="currentVideo" autoplay muted loop playsinline preload="metadata" aria-label="Current video"></video>
+    <main class="media-container" role="main">
+    <section id="mediaPlayer" class="media-feed" aria-label="Media player">
+        <div id="mediaContainer" class="media-container-inner">
+            <!-- Media items will be dynamically loaded here -->
+        </div>
         
         <div class="hero-overlay">
             <h1>Watch • Share • Earn Coins</h1>
             <p>Share videos, collect coins & withdraw rewards</p>
         </div>
         
-        <div class="video-controls" role="toolbar" aria-label="Video controls">
-            <button class="video-nav-btn prev-btn" onclick="videoSystem.previousVideo()" aria-label="Previous video">
+        <div class="media-controls" role="toolbar" aria-label="Media controls">
+            <button class="media-nav-btn prev-btn" onclick="mediaSystem.previousMedia()" aria-label="Previous media">
                 <span aria-hidden="true">↑</span>
             </button>
-            <button class="video-nav-btn next-btn" onclick="videoSystem.nextVideo()" aria-label="Next video">
+            <button class="media-nav-btn next-btn" onclick="mediaSystem.nextMedia()" aria-label="Next media">
                 <span aria-hidden="true">↓</span>
             </button>
+        </div>
+        
+        <!-- Fallback empty state -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-content">
+                <div class="empty-icon">📱</div>
+                <h2>No Media Available</h2>
+                <p>Add photos and videos to the /images and /videos folders to get started</p>
+                <div class="empty-state-details">
+                    <p>Place files like:</p>
+                    <code>/images/photo1.png, photo2.png...</code><br>
+                    <code>/videos/video1.mp4, video2.mp4...</code>
+                </div>
+            </div>
         </div>
     </section>
     
@@ -117,6 +133,7 @@
     <p class="copyright">© 2025 Entertainment Rewards Platform. All rights reserved.</p>
 </footer>
 
+<script src="media-loader.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
