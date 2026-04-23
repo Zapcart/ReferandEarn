@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Withdraw your earned coins for real rewards. Convert 1000 coins to ₹500. Fast, secure withdrawals processed within 24-72 hours.">
+    <meta name="keywords" content="withdraw coins, coin to rupee, rewards withdrawal, entertainment rewards, coin redemption">
+    <meta name="author" content="Entertainment Rewards Platform">
+    <meta property="og:title" content="Withdraw Rewards - Entertainment Rewards Platform">
+    <meta property="og:description" content="Convert your coins to real rewards. Fast and secure withdrawals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/repository/withdraw.html">
+    <meta property="og:image" content="https://yourusername.github.io/repository/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Withdraw Rewards - Entertainment Rewards Platform">
+    <meta name="twitter:description" content="Convert your coins to real rewards. Fast and secure withdrawals.">
+    <meta name="twitter:image" content="https://yourusername.github.io/repository/og-image.jpg">
+    <link rel="canonical" href="https://yourusername.github.io/repository/withdraw.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Withdraw Rewards",
+        "description": "Convert your coins to real rewards. Fast and secure withdrawals.",
+        "url": "https://yourusername.github.io/repository/withdraw.html",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Entertainment Rewards Platform",
+            "url": "https://yourusername.github.io/repository/"
+        }
+    }
+    </script>
+    <title>Withdraw Rewards - Entertainment Rewards Platform</title>
+</head>
+<body>
+    <header class="top-bar" role="banner">
+    <div class="coin-display" role="status" aria-live="polite" aria-label="Current coin balance">
+        <span class="coin-icon" aria-hidden="true">🪙</span>
+        <span id="coinCount" aria-label="Coins">0</span>
+    </div>
+    <nav class="nav-buttons" role="navigation" aria-label="Main navigation">
+        <button class="home-btn" onclick="window.location.href='index.html'" aria-label="Go to home page">
+            <span class="btn-icon">🏠</span>
+            <span>Home</span>
+        </button>
+    </nav>
+</header>
+        
+<main class="withdraw-container" role="main">
+    <section class="withdraw-content">
+        <h1 class="page-title">Withdraw Rewards</h1>
+        <p class="page-subtitle">Convert your earned coins to real rewards</p>
+        
+        <div class="conversion-box">
+            <h2>Coin to INR Conversion</h2>
+            <div class="conversion-display" role="region" aria-label="Coin conversion calculator">
+                <div class="conversion-item">
+                    <span class="coins-display" id="coinsDisplay" aria-live="polite">0</span>
+                    <span>Coins</span>
+                </div>
+                <div class="equals" aria-hidden="true">=</div>
+                <div class="conversion-item">
+                    <span class="rupee-display" id="rupeeDisplay" aria-live="polite">₹0</span>
+                    <span>Indian Rupees</span>
+                </div>
+            </div>
+            <p class="conversion-rate">1000 Coins = ₹500</p>
+        </div>
+            
+        <section class="requirements-section" role="region" aria-label="Withdrawal requirements">
+            <h2>Requirements Checklist</h2>
+            <div class="checklist" role="list">
+                <div class="checklist-item" role="listitem">
+                    <span class="check-icon" id="coinsCheck" aria-hidden="true">✓</span>
+                    <span>Minimum 1000 coins</span>
+                </div>
+                <div class="checklist-item" role="listitem">
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>Valid payment details</span>
+                </div>
+                <div class="checklist-item" role="listitem">
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>Account verification</span>
+                </div>
+            </div>
+        </section>
+            
+        <button class="withdraw-btn" id="withdrawBtn" onclick="initiateWithdraw()" disabled aria-label="Withdraw to bank account">
+            Withdraw to Bank Account
+        </button>
+            
+        <section class="trust-section" role="region" aria-label="Trust information">
+            <h2>Why Trust Us</h2>
+            <div class="trust-items">
+                <div class="trust-item">
+                    <span class="trust-icon" aria-hidden="true">⏱️</span>
+                    <span>Payments processed within 24-72 hours</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon" aria-hidden="true">🔒</span>
+                    <span>Subject to verification</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon" aria-hidden="true">✅</span>
+                    <span>Secure transactions guaranteed</span>
+                </div>
+            </div>
+        </section>
+            
+        <aside class="ad-section" role="complementary" aria-label="Advertisement">
+            <div class="ad-placeholder" aria-label="Advertisement space">
+                <span>Ad Space (300x250)</span>
+            </div>
+        </aside>
+    </section>
+</main>
+    
+<footer class="footer" role="contentinfo">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="earn.html" class="footer-link">Earn Coins</a>
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        <a href="terms.html" class="footer-link">Terms of Service</a>
+    </nav>
+    <p class="copyright">© 2025 Entertainment Rewards Platform. All rights reserved.</p>
+</footer>
+
+<div id="toast" class="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

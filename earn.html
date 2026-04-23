@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Earn coins by sharing videos and content with friends. Complete daily tasks and unlock exciting rewards on our entertainment platform.">
+    <meta name="keywords" content="earn coins, share and earn, daily bonus, entertainment rewards, coin rewards">
+    <meta name="author" content="Entertainment Rewards Platform">
+    <meta property="og:title" content="Earn Coins - Entertainment Rewards Platform">
+    <meta property="og:description" content="Complete simple tasks to earn coins and unlock exciting rewards.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/repository/earn.html">
+    <meta property="og:image" content="https://yourusername.github.io/repository/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Earn Coins - Entertainment Rewards Platform">
+    <meta name="twitter:description" content="Complete simple tasks to earn coins and unlock exciting rewards.">
+    <meta name="twitter:image" content="https://yourusername.github.io/repository/og-image.jpg">
+    <link rel="canonical" href="https://yourusername.github.io/repository/earn.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Earn Coins",
+        "description": "Complete simple tasks to earn coins and unlock exciting rewards.",
+        "url": "https://yourusername.github.io/repository/earn.html",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Entertainment Rewards Platform",
+            "url": "https://yourusername.github.io/repository/"
+        }
+    }
+    </script>
+    <title>Earn Coins - Entertainment Rewards Platform</title>
+</head>
+<body>
+    <header class="top-bar" role="banner">
+    <div class="coin-display" role="status" aria-live="polite" aria-label="Current coin balance">
+        <span class="coin-icon" aria-hidden="true">🪙</span>
+        <span id="coinCount" aria-label="Coins">0</span>
+    </div>
+    <nav class="nav-buttons" role="navigation" aria-label="Main navigation">
+        <button class="home-btn" onclick="window.location.href='index.html'" aria-label="Go to home page">
+            <span class="btn-icon">🏠</span>
+            <span>Home</span>
+        </button>
+    </nav>
+</header>
+        
+<main class="earn-container" role="main">
+    <section class="earn-content">
+        <h1 class="page-title">Earn Coins</h1>
+        <p class="page-subtitle">Complete simple tasks to collect coins and unlock exciting rewards</p>
+        
+        <div class="coin-balance">
+            <h2>Your Coins</h2>
+            <div class="balance-amount" id="balanceAmount" role="status" aria-live="polite">0</div>
+        </div>
+            
+        <div class="progress-section" role="region" aria-label="Progress to withdrawal">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progress to 1000 coins">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-text">Reach 1000 coins to unlock withdrawal</p>
+        </div>
+            
+        <section class="action-cards" role="region" aria-label="Earning actions">
+            <h2 class="section-title">Ways to Earn</h2>
+            <div class="action-card" onclick="shareOnWhatsApp()" role="button" tabindex="0" aria-label="Share on WhatsApp to earn 1 coin">
+                <div class="card-icon whatsapp" aria-hidden="true">💬</div>
+                <div class="card-content">
+                    <h3>Share on WhatsApp</h3>
+                    <p>+1 coin</p>
+                </div>
+            </div>
+            
+            <div class="action-card" onclick="shareOnTelegram()" role="button" tabindex="0" aria-label="Share on Telegram to earn 1 coin">
+                <div class="card-icon telegram" aria-hidden="true">✈️</div>
+                <div class="card-content">
+                    <h3>Share on Telegram</h3>
+                    <p>+1 coin</p>
+                </div>
+            </div>
+            
+            <div class="action-card" onclick="copyLink()" role="button" tabindex="0" aria-label="Copy link to earn 1 coin">
+                <div class="card-icon copy" aria-hidden="true">🔗</div>
+                <div class="card-content">
+                    <h3>Copy Link</h3>
+                    <p>+1 coin</p>
+                </div>
+            </div>
+            
+            <div class="action-card" onclick="claimDailyBonus()" role="button" tabindex="0" aria-label="Claim daily bonus to earn 5 coins">
+                <div class="card-icon bonus" aria-hidden="true">🎁</div>
+                <div class="card-content">
+                    <h3>Daily Bonus</h3>
+                    <p>+5 coins</p>
+                </div>
+            </div>
+        </section>
+            
+        <aside class="ad-section" role="complementary" aria-label="Advertisement">
+            <div class="ad-placeholder" aria-label="Advertisement space">
+                <span>Ad Space (300x250)</span>
+            </div>
+        </aside>
+    </section>
+</main>
+    
+<footer class="footer" role="contentinfo">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        <a href="terms.html" class="footer-link">Terms of Service</a>
+        <a href="withdraw.html" class="footer-link">Withdraw Rewards</a>
+    </nav>
+    <p class="copyright">© 2025 Entertainment Rewards Platform. All rights reserved.</p>
+</footer>
+
+<div id="toast" class="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

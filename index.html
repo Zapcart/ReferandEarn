@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Enhanced SEO Meta Tags for Refer & Earn -->
+    <title>Refer & Earn - Online Earning Platform | Earn Money Online | Zapcart</title>
+    <meta name="description" content="Join Zapcart - India's most trusted Refer & Earn platform. Refer friends, watch photos, complete tasks and earn real money online. Instant payments and 24/7 support.">
+    <meta name="keywords" content="refer and earn, online earning platform, earn money online, referral program, zapcart, refer friends, earn from home, make money online, referral earnings">
+    <meta name="author" content="Zapcart Refer & Earn Platform">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    
+    <!-- Open Graph Tags for Social Sharing -->
+    <meta property="og:title" content="Refer & Earn - Online Earning Platform | Zapcart">
+    <meta property="og:description" content="Earn money online by referring friends and completing simple tasks. Join India's most trusted earning platform.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/repository/">
+    <meta property="og:image" content="https://yourusername.github.io/repository/og-image.jpg">
+    <meta property="og:image:alt" content="Zapcart - Refer & Earn Online Platform">
+    <meta property="og:site_name" content="Zapcart">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Refer & Earn - Online Earning Platform">
+    <meta name="twitter:description" content="Earn money online with Zapcart's referral program. Start earning today!">
+    <meta name="twitter:image" content="https://yourusername.github.io/repository/twitter-image.jpg">
+    <meta name="twitter:image:alt" content="Zapcart Refer & Earn Platform">
+    <meta name="twitter:site" content="@zapcart">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourusername.github.io/repository/">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Zapcart - Refer & Earn Platform",
+        "description": "Professional online earning platform with referral program and multiple earning methods",
+        "url": "https://yourusername.github.io/repository/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://yourusername.github.io/repository/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        },
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "Zapcart",
+            "url": "https://yourusername.github.io/repository/",
+            "logo": "https://yourusername.github.io/repository/logo.png",
+            "description": "India's most trusted refer and earn platform"
+        }
+    }
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#FFD700">
+    <meta name="msapplication-TileColor" content="#FFD700">
+</head>
+<body>
+    <header class="top-bar" role="banner">
+        <div class="logo-section">
+            <div class="logo">🪙 Zapcart</div>
+            <div class="tagline">Refer & Earn</div>
+        </div>
+        
+        <div class="header-actions">
+            <div class="coin-display" role="status" aria-live="polite" aria-label="Current coin balance">
+                <span class="coin-icon" aria-hidden="true">🪙</span>
+                <span id="coinCount" aria-label="Coins">0</span>
+            </div>
+            <nav class="nav-buttons" role="navigation" aria-label="Main navigation">
+                <button id="loginBtn" class="earn-btn" onclick="showLoginModal()" aria-label="Login">
+                    <span class="btn-icon">🔐</span>
+                    <span>Login</span>
+                </button>
+                <button id="logoutBtn" class="earn-btn logout-btn" onclick="logout()" style="display: none;" aria-label="Logout">
+                    <span class="btn-icon">🚪</span>
+                    <span>Logout</span>
+                </button>
+                <button id="withdrawBtn" class="earn-btn" onclick="window.location.href='withdraw.html'" style="display: none;" aria-label="Go to withdraw page">
+                    <span class="btn-icon">💰</span>
+                    <span>Withdraw</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login/Signup Modal -->
+    <div id="authModal" class="auth-modal" style="display: none;">
+        <div class="modal-backdrop" onclick="closeAuthModal()"></div>
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <h3 id="authTitle">Login</h3>
+                <button class="modal-close" onclick="closeAuthModal()">&times;</button>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+            </div>
+            
+            <form id="authForm" onsubmit="handleAuth(event)" class="auth-form">
+                <div class="form-group">
+                    <label for="authEmail">Email</label>
+                    <input type="email" id="authEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="authPassword">Password</label>
+                    <input type="password" id="authPassword" required placeholder="Enter your password" minlength="6">
+                </div>
+                <div class="form-group" id="confirmPasswordGroup" style="display: none;">
+                    <label for="authConfirmPassword">Confirm Password</label>
+                    <input type="password" id="authConfirmPassword" placeholder="Confirm your password" minlength="6">
+                </div>
+                <button type="submit" class="auth-submit-btn" id="authSubmitBtn">
+                    <span class="btn-icon">🔐</span>
+                    <span>Login</span>
+                </button>
+            </form>
+            
+            <div class="auth-footer">
+                <p id="authFooterText">Don't have an account? <a href="#" onclick="switchAuthTab('signup')">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Dashboard (Hidden until login) -->
+    <div id="userDashboard" class="user-dashboard" style="display: none;">
+        <div class="dashboard-header">
+            <h2>Welcome Back!</h2>
+            <p id="userEmailDisplay">user@example.com</p>
+        </div>
+        
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">🪙</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="dashboardCoins">0</span>
+                    <span class="stat-label">Total Coins</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="dailyProgress">0/50</span>
+                    <span class="stat-label">Daily Progress</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="referralCount">0</span>
+                    <span class="stat-label">Referrals</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="referral-section">
+            <h3>Your Referral Code</h3>
+            <div class="referral-box">
+                <input type="text" id="userReferralCode" value="ZAPXXXX" readonly>
+                <button class="copy-btn" onclick="copyUserReferralCode()">
+                    <span class="btn-icon">📋</span>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <div class="referral-link">
+                <p id="referralLink">https://yourdomain.com/?ref=ZAPXXXX</p>
+                <button class="share-btn whatsapp" onclick="shareReferralOnWhatsApp()">
+                    <span class="share-icon">📱</span>
+                    <span>Share on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main role="main">
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+        <!-- Professional Hero Section -->
+        <section class="hero-section" id="heroSection" aria-label="Hero section">
+            <div class="hero-content">
+                <h1 class="hero-title">Refer & Earn / Online Earning Platform</h1>
+                <p class="hero-subtitle">
+                    Multiple ways to earn money online - refer friends, watch photos, complete tasks, and share content. 
+                    Join 50,000+ users earning with Zapcart!
+                </p>
+                <button class="primary-cta-btn" onclick="scrollToEarningMethods()">
+                    <span class="btn-icon">🚀</span>
+                    <span>Start Earning</span>
+                </button>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">₹25L+</span>
+                        <span class="stat-label">Paid Out</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.9★</span>
+                        <span class="stat-label">User Rating</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How You Can Earn Section -->
+        <section class="earning-methods" id="earning-methods" aria-label="Earning methods">
+            <div class="section-wrapper">
+                <h2 class="section-title">How You Can Earn</h2>
+                <p class="section-subtitle">Choose from multiple earning methods and maximize your income</p>
+                
+                <div class="methods-grid">
+                    <!-- Refer Friends Card -->
+                    <div class="method-card">
+                        <div class="method-icon refer-icon">👥</div>
+                        <h3 class="method-title">Refer Friends & Earn</h3>
+                        <p class="method-description">
+                            Invite friends to join Zapcart and earn commission for every referral. 
+                            Lifetime earnings from your network.
+                        </p>
+                        <button class="method-cta-btn" onclick="handleReferAction()">
+                            <span class="btn-icon">🎯</span>
+                            <span>Start Referring</span>
+                        </button>
+                        <div class="method-features">
+                            <span class="feature">10% Commission</span>
+                            <span class="feature">Lifetime Earnings</span>
+                        </div>
+                    </div>
+
+                    <!-- Watch Photos Card -->
+                    <div class="method-card">
+                        <div class="method-icon photo-icon">📸</div>
+                        <h3 class="method-title">Watch Photos & Earn</h3>
+                        <p class="method-description">
+                            View amazing photos and earn coins for each view. 
+                            Simple, fun, and rewarding way to earn.
+                        </p>
+                        <button class="method-cta-btn" onclick="handleWatchPhotos()">
+                            <span class="btn-icon">👁️</span>
+                            <span>Watch Photos</span>
+                        </button>
+                        <div class="method-features">
+                            <span class="feature">1 Coin/Photo</span>
+                            <span class="feature">Instant Credit</span>
+                        </div>
+                    </div>
+
+                    <!-- Watch Ads Card -->
+                    <div class="method-card">
+                        <div class="method-icon ad-icon">📺</div>
+                        <h3 class="method-title">Watch Ads & Earn</h3>
+                        <p class="method-description">
+                            Watch short advertisements and earn rewards. 
+                            Higher payouts for premium ads.
+                        </p>
+                        <button class="method-cta-btn" onclick="handleWatchAds()">
+                            <span class="btn-icon">🎬</span>
+                            <span>Watch Ads</span>
+                        </button>
+                        <div class="method-features">
+                            <span class="feature">5 Coins/Ad</span>
+                            <span class="feature">Premium Available</span>
+                        </div>
+                    </div>
+
+                    <!-- Share Website Card -->
+                    <div class="method-card">
+                        <div class="method-icon share-icon">🔗</div>
+                        <h3 class="method-title">Share Website & Earn</h3>
+                        <p class="method-description">
+                            Share Zapcart on social media and earn coins for every click. 
+                            Viral earning potential.
+                        </p>
+                        <button class="method-cta-btn" onclick="handleShareAction()">
+                            <span class="btn-icon">📤</span>
+                            <span>Share Now</span>
+                        </button>
+                        <div class="method-features">
+                            <span class="feature">2 Coins/Share</span>
+                            <span class="feature">Viral Bonus</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Refer & Earn Section -->
+        <section class="refer-section" id="refer-section" aria-label="Refer and earn section">
+            <div class="section-wrapper">
+                <h2 class="section-title">Refer & Earn Program</h2>
+                <p class="section-subtitle">Build your network and earn lifetime commissions</p>
+                
+                <div class="refer-flow">
+                    <div class="refer-steps">
+                        <div class="refer-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Get Referral Link</h4>
+                                <p>Copy your unique referral code</p>
+                            </div>
+                        </div>
+                        
+                        <div class="refer-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Share with Friends</h4>
+                                <p>Invite friends via WhatsApp, social media</p>
+                            </div>
+                        </div>
+                        
+                        <div class="refer-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Friend Joins</h4>
+                                <p>Your friend signs up using your code</p>
+                            </div>
+                        </div>
+                        
+                        <div class="refer-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Earn Commission</h4>
+                                <p>Get 10% of your friend's earnings</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="refer-action">
+                        <div class="referral-box">
+                            <input type="text" id="referralCode" value="ZAPCART2025" readonly>
+                            <button class="copy-btn" onclick="copyReferralCode()">
+                                <span class="btn-icon">📋</span>
+                                <span>Copy Code</span>
+                            </button>
+                        </div>
+                        
+                        <div class="share-buttons">
+                            <button class="share-btn whatsapp" onclick="shareOnWhatsApp()">
+                                <span class="share-icon">📱</span>
+                                <span>WhatsApp</span>
+                            </button>
+                            <button class="share-btn telegram" onclick="shareOnTelegram()">
+                                <span class="share-icon">✈️</span>
+                                <span>Telegram</span>
+                            </button>
+                            <button class="share-btn facebook" onclick="shareOnFacebook()">
+                                <span class="share-icon">📘</span>
+                                <span>Facebook</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Watch & Earn Section (Not Popup) -->
+        <section class="watch-section" id="watch-section" aria-label="Watch and earn section">
+            <div class="section-wrapper">
+                <h2 class="section-title">Watch Photos & Earn Coins</h2>
+                <p class="section-subtitle">View amazing photos and earn coins instantly</p>
+                
+                <div class="watch-container">
+                    <div id="mediaContainer" class="media-container-inner">
+                        <!-- Media will be loaded here when user clicks "Start Watching" -->
+                        <div class="watch-placeholder">
+                            <div class="placeholder-icon">📸</div>
+                            <h3>Ready to Start Earning?</h3>
+                            <p>Click the button below to start watching photos and earning coins</p>
+                            <button class="watch-start-btn" onclick="startWatchingPhotos()">
+                                <span class="btn-icon">👁️</span>
+                                <span>Start Watching Photos</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Loading Animation (Hidden by default) -->
+                    <div id="loadingAnimation" class="loading-animation" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>Loading amazing photos for you...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust & About Section -->
+        <section class="trust-section" aria-label="Trust and about section">
+            <div class="section-wrapper">
+                <h2 class="section-title">Why Choose Zapcart?</h2>
+                <p class="section-subtitle">India's most trusted online earning platform</p>
+                
+                <div class="trust-grid">
+                    <div class="trust-item">
+                        <div class="trust-icon">🛡️</div>
+                        <h4>100% Secure</h4>
+                        <p>Your data and earnings are protected with bank-level security</p>
+                    </div>
+                    
+                    <div class="trust-item">
+                        <div class="trust-icon">⚡</div>
+                        <h4>Instant Payments</h4>
+                        <p>Withdraw your earnings instantly to your bank account</p>
+                    </div>
+                    
+                    <div class="trust-item">
+                        <div class="trust-icon">📞</div>
+                        <h4>24/7 Support</h4>
+                        <p>Get help anytime with our dedicated support team</p>
+                    </div>
+                    
+                    <div class="trust-item">
+                        <div class="trust-icon">🏆</div>
+                        <h4>Proven Track Record</h4>
+                        <p>Over ₹25 Lakhs paid out to 50,000+ users</p>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <button class="primary-cta-btn" onclick="window.location.href='earn.html'">
+                        <span class="btn-icon">🚀</span>
+                        <span>Start Earning Now</span>
+                    </button>
+                    <p class="cta-subtitle">Join thousands earning money online with Zapcart</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3 class="footer-logo">🪙 Zapcart</h3>
+                <p class="footer-tagline">India's Most Trusted Refer & Earn Platform</p>
+            </div>
+            
+            <nav class="footer-nav" aria-label="Footer navigation">
+                <div class="footer-section">
+                    <h4>Earning Methods</h4>
+                    <a href="#earning-methods" class="footer-link">All Methods</a>
+                    <a href="#refer-section" class="footer-link">Refer Program</a>
+                    <a href="#watch-section" class="footer-link">Watch Photos</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="privacy.html" class="footer-link">Privacy Policy</a>
+                    <a href="terms.html" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Contact Us</a>
+                    <a href="#" class="footer-link">FAQ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">How It Works</a>
+                    <a href="#" class="footer-link">Payment Proof</a>
+                    <a href="#" class="footer-link">Blog</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                    <a href="#" class="footer-link">WhatsApp</a>
+                    <a href="#" class="footer-link">Telegram</a>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="copyright">© 2025 Zapcart Refer & Earn Platform. All rights reserved.</p>
+            <div class="footer-badges">
+                <span class="badge">🛡️ 100% Secure</span>
+                <span class="badge">⚡ Instant Payment</span>
+                <span class="badge">🇮🇳 Made in India</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="media-loader.js"></script>
+    <script src="script.js"></script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+      import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+      import { getFirestore, doc, setDoc, updateDoc, onSnapshot, increment, getDocs, query, where, collection } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCKvtEWdfIcrB6LuV9wTjtfZzksKT-v1XE",
+        authDomain: "referearn-6769b.firebaseapp.com",
+        projectId: "referearn-6769b",
+        storageBucket: "referearn-6769b.firebasestorage.app",
+        messagingSenderId: "418818490601",
+        appId: "1:418818490601:web:49e5b26acccc6efcb47078"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Generate Referral Code
+      function generateReferralCode() {
+        return "ZAP" + Math.random().toString(36).substring(2,8).toUpperCase();
+      }
+
+      // Get Referral from URL
+      function getReferral() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("ref");
+      }
+
+      // Signup
+      window.signup = async (email, password) => {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCred.user;
+
+        let ref = getReferral();
+
+        await setDoc(doc(db, "users", user.uid), {
+          coins: 0,
+          referralCode: generateReferralCode(),
+          referredBy: ref || null
+        });
+
+        // Referral Bonus
+        if (ref) {
+          const q = query(collection(db, "users"), where("referralCode", "==", ref));
+          const snapshot = await getDocs(q);
+
+          snapshot.forEach(async (docSnap) => {
+            await updateDoc(docSnap.ref, {
+              coins: increment(20)
+            });
+          });
+        }
+
+        alert("Signup Success ✅");
+      };
+
+      // Login
+      window.login = async (email, password) => {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login Success ✅");
+      };
+
+      // Logout
+      window.logout = async () => {
+        await signOut(auth);
+        alert("Logged out");
+      };
+
+      // Add Coins
+      window.addCoins = async (amount) => {
+        const user = auth.currentUser;
+        if (!user) return alert("Login first");
+
+        const userRef = doc(db, "users", user.uid);
+
+        await updateDoc(userRef, {
+          coins: increment(amount)
+        });
+      };
+
+      // Live Coin Update
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const userRef = doc(db, "users", user.uid);
+
+          onSnapshot(userRef, (docSnap) => {
+            if (docSnap.exists()) {
+              document.getElementById("coinCount").innerText = docSnap.data().coins;
+              
+              // Update referral code in dashboard
+              const data = docSnap.data();
+              const referralCodeEl = document.getElementById('userReferralCode');
+              const referralLinkEl = document.getElementById('referralLink');
+              if (referralCodeEl && data.referralCode) {
+                referralCodeEl.value = data.referralCode;
+                referralLinkEl.textContent = `https://yourdomain.com/?ref=${data.referralCode}`;
+              }
+              
+              // Update UI for logged in user
+              if (typeof updateUIForLoggedInUser === 'function') {
+                updateUIForLoggedInUser({ email: user.email });
+              }
+            }
+          });
+        } else {
+          // User is logged out
+          if (typeof updateUIForLoggedOutUser === 'function') {
+            updateUIForLoggedOutUser();
+          }
+        }
+      });
+
+      window.auth = auth;
+      window.db = db;
+    </script>
+</body>
+</html>

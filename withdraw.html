@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Withdraw Coins | Convert Coins to Real Money | Zapcart Refer & Earn</title>
+    <meta name="description" content="Convert your earned coins to real money. 500 coins = ₹100, 1000 coins = ₹250, 3000 coins = ₹800. Instant withdrawals via Bank Transfer & UPI.">
+    <meta name="keywords" content="withdraw coins, convert coins to money, zapcart withdrawal, refer and earn payment">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Additional Styles for Withdraw Page -->
+    <style>
+        .withdraw-page {
+            padding-top: 90px;
+            min-height: 100vh;
+            background: var(--bg-primary);
+        }
+        
+        .withdraw-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(14, 14, 16, 0.9));
+        }
+        
+        .withdraw-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .withdraw-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .current-balance {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 20px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .current-balance .coin-icon {
+            font-size: 24px;
+        }
+        
+        .withdraw-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .conversion-table {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .conversion-table h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .conversion-rates {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .conversion-rate-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .conversion-rate-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .conversion-rate-item.recommended {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.05));
+            border-color: var(--accent-gold);
+            position: relative;
+        }
+        
+        .recommended-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .rate-coins {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+        
+        .rate-arrow {
+            font-size: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .rate-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .withdraw-form {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .withdraw-form h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 16px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .amount-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .amount-option {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .amount-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .amount-option.selected {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--accent-gold);
+        }
+        
+        .amount-coins {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+        }
+        
+        .amount-rupees {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .withdraw-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        .withdraw-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+        }
+        
+        .withdraw-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .requirements {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .requirements h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .requirement-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        
+        .requirement-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4CAF50;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .requirement-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .trust-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .trust-section h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .trust-items {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .trust-icon {
+            font-size: 20px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .withdraw-page {
+                padding-top: 80px;
+            }
+            
+            .withdraw-title {
+                font-size: 28px;
+            }
+            
+            .withdraw-subtitle {
+                font-size: 16px;
+            }
+            
+            .current-balance {
+                font-size: 18px;
+                padding: 12px 20px;
+            }
+            
+            .withdraw-content {
+                padding: 30px 15px;
+            }
+            
+            .conversion-table,
+            .withdraw-form,
+            .requirements {
+                padding: 20px;
+            }
+            
+            .conversion-table h2,
+            .withdraw-form h2,
+            .requirements h2 {
+                font-size: 20px;
+            }
+            
+            .conversion-rate-item {
+                padding: 15px;
+            }
+            
+            .rate-coins,
+            .rate-amount {
+                font-size: 18px;
+            }
+            
+            .amount-selection {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-bar" role="banner">
+        <div class="logo-section">
+            <div class="logo">🪙 Zapcart</div>
+            <div class="tagline">Refer & Earn</div>
+        </div>
+        
+        <div class="header-actions">
+            <div class="coin-display" role="status" aria-live="polite" aria-label="Current coin balance">
+                <span class="coin-icon" aria-hidden="true">🪙</span>
+                <span id="coinCount" aria-label="Coins">0</span>
+            </div>
+            <nav class="nav-buttons" role="navigation" aria-label="Main navigation">
+                <button class="earn-btn" onclick="window.location.href='index.html'" aria-label="Go to homepage">
+                    <span class="btn-icon">🏠</span>
+                    <span>Home</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="withdraw-page" role="main">
+        <section class="withdraw-header" aria-label="Withdraw header">
+            <h1 class="withdraw-title">Withdraw Coins</h1>
+            <p class="withdraw-subtitle">Convert your earned coins to real money instantly</p>
+            <div class="current-balance">
+                <span class="coin-icon">🪙</span>
+                <span id="currentBalance">0</span>
+                <span>Coins Available</span>
+            </div>
+        </section>
+
+        <div class="withdraw-content">
+            <!-- Conversion Table -->
+            <section class="conversion-table" aria-label="Coin conversion rates">
+                <h2>Coin Conversion Rates</h2>
+                <div class="conversion-rates">
+                    <div class="conversion-rate-item" data-coins="500" data-amount="100">
+                        <span class="rate-coins">500 Coins</span>
+                        <span class="rate-arrow">→</span>
+                        <span class="rate-amount">₹100</span>
+                    </div>
+                    <div class="conversion-rate-item recommended" data-coins="1000" data-amount="250">
+                        <span class="recommended-badge">Popular</span>
+                        <span class="rate-coins">1000 Coins</span>
+                        <span class="rate-arrow">→</span>
+                        <span class="rate-amount">₹250</span>
+                    </div>
+                    <div class="conversion-rate-item" data-coins="3000" data-amount="800">
+                        <span class="rate-coins">3000 Coins</span>
+                        <span class="rate-arrow">→</span>
+                        <span class="rate-amount">₹800</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Withdraw Form -->
+            <section class="withdraw-form" aria-label="Withdrawal form">
+                <h2>Request Withdrawal</h2>
+                <form id="withdrawForm">
+                    <div class="form-group">
+                        <label>Select Amount</label>
+                        <div class="amount-selection">
+                            <div class="amount-option" data-coins="500" data-amount="100">
+                                <div class="amount-coins">500 Coins</div>
+                                <div class="amount-rupees">₹100</div>
+                            </div>
+                            <div class="amount-option" data-coins="1000" data-amount="250">
+                                <div class="amount-coins">1000 Coins</div>
+                                <div class="amount-rupees">₹250</div>
+                            </div>
+                            <div class="amount-option" data-coins="3000" data-amount="800">
+                                <div class="amount-coins">3000 Coins</div>
+                                <div class="amount-rupees">₹800</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" required>
+                            <option value="">Select Payment Method</option>
+                            <option value="bank">Bank Transfer</option>
+                            <option value="upi">UPI</option>
+                        </select>
+                    </div>
+                    
+                    <div id="bankFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="accountName">Account Name</label>
+                            <input type="text" id="accountName" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="accountNumber">Account Number</label>
+                            <input type="text" id="accountNumber" placeholder="Enter account number">
+                        </div>
+                        <div class="form-group">
+                            <label for="ifscCode">IFSC Code</label>
+                            <input type="text" id="ifscCode" placeholder="Enter IFSC code">
+                        </div>
+                    </div>
+                    
+                    <div id="upiFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="upiId">UPI ID</label>
+                            <input type="text" id="upiId" placeholder="Enter UPI ID (e.g., mobile@upi)">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="withdraw-btn" id="withdrawBtn" disabled>
+                        Process Withdrawal
+                    </button>
+                </form>
+            </section>
+
+            <!-- Requirements -->
+            <section class="requirements" aria-label="Withdrawal requirements">
+                <h2>Withdrawal Requirements</h2>
+                <div class="requirement-list">
+                    <div class="requirement-item">
+                        <div class="requirement-icon">✓</div>
+                        <div class="requirement-text">Minimum 500 coins required for withdrawal</div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">✓</div>
+                        <div class="requirement-text">Valid payment details must be provided</div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">✓</div>
+                        <div class="requirement-text">Withdrawals processed within 24-48 hours</div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">✓</div>
+                        <div class="requirement-text">Coins will be deducted after successful withdrawal</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trust Section -->
+            <section class="trust-section" aria-label="Trust information">
+                <h2>Why Trust Zapcart</h2>
+                <div class="trust-items">
+                    <div class="trust-item">
+                        <span class="trust-icon">⚡</span>
+                        <span>Instant Processing</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">🔒</span>
+                        <span>Secure Payments</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">📞</span>
+                        <span>24/7 Support</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3 class="footer-logo">🪙 Zapcart</h3>
+                <p class="footer-tagline">India's Most Trusted Refer & Earn Platform</p>
+            </div>
+            
+            <nav class="footer-nav" aria-label="Footer navigation">
+                <div class="footer-section">
+                    <h4>Earning Methods</h4>
+                    <a href="index.html#earning-methods" class="footer-link">All Methods</a>
+                    <a href="index.html#refer-section" class="footer-link">Refer Program</a>
+                    <a href="watch.html" class="footer-link">Watch Photos</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Account</h4>
+                    <a href="withdraw.html" class="footer-link">Withdraw</a>
+                    <a href="#" class="footer-link">My Profile</a>
+                    <a href="#" class="footer-link">Earnings History</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Contact Us</a>
+                    <a href="#" class="footer-link">FAQ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                    <a href="#" class="footer-link">WhatsApp</a>
+                    <a href="#" class="footer-link">Telegram</a>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="copyright">© 2025 Zapcart Refer & Earn Platform. All rights reserved.</p>
+            <div class="footer-badges">
+                <span class="badge">🛡️ 100% Secure</span>
+                <span class="badge">⚡ Instant Payment</span>
+                <span class="badge">🇮🇳 Made in India</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="withdraw.js"></script>
+</body>
+</html>
