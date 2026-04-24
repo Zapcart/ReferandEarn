@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickEarn - Earn Money Online</title>
+    <meta name="description" content="Earn real money by referring friends, daily bonuses, and watching ads. Quick withdrawal via UPI.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-2: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-3: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .coin-display {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-modal.active {
+            display: flex;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 12px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .auth-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .auth-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .welcome-banner {
+            background: var(--gradient-1);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .welcome-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .coin-balance {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .coin-balance .amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Earning Cards */
+        .earning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .earning-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .earning-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .earning-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .earning-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .earning-card .reward {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Referral Section */
+        .referral-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .referral-box {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .referral-box input {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Withdrawal Section */
+        .withdrawal-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .withdrawal-form {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Trust Section */
+        .trust-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .trust-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .testimonial-card .stars {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-color: var(--secondary);
+        }
+
+        .toast.error {
+            border-color: #ef4444;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .earning-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">⚡ QuickEarn</div>
+        <div class="header-actions">
+            <div class="coin-display" id="coinDisplay" style="display: none;">
+                <span>🪙</span>
+                <span id="coinCount">0</span>
+            </div>
+            <button class="btn btn-primary" id="loginBtn" onclick="showAuthModal()">Login</button>
+            <button class="btn btn-secondary" id="logoutBtn" onclick="logout()" style="display: none;">Logout</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero" id="heroSection">
+            <h1>Earn Real Money Online</h1>
+            <p>Refer friends, complete daily tasks, and withdraw instantly via UPI</p>
+            <button class="btn btn-primary" onclick="showAuthModal()">Start Earning Now</button>
+        </section>
+
+        <!-- Dashboard -->
+        <section class="dashboard" id="dashboard">
+            <div class="welcome-banner">
+                <div class="welcome-text">
+                    <h2 id="welcomeText">Welcome back! 👋</h2>
+                    <p>Start earning by completing tasks below</p>
+                </div>
+                <div class="coin-balance">
+                    <div class="amount" id="dashboardCoins">0</div>
+                    <div>Coins</div>
+                </div>
+            </div>
+
+            <!-- Earning Methods -->
+            <div class="earning-grid">
+                <div class="earning-card" onclick="handleRefer()">
+                    <div class="icon">👥</div>
+                    <h3>Refer & Earn</h3>
+                    <p class="reward">+10 coins per referral</p>
+                </div>
+                <div class="earning-card" onclick="handleDailyBonus()">
+                    <div class="icon">🎁</div>
+                    <h3>Daily Bonus</h3>
+                    <p class="reward">+5 coins daily</p>
+                </div>
+                <div class="earning-card" onclick="handleWatchAd()">
+                    <div class="icon">📺</div>
+                    <h3>Watch Ad</h3>
+                    <p class="reward">+2 coins per ad</p>
+                </div>
+            </div>
+
+            <!-- Referral Section -->
+            <div class="referral-section">
+                <h3>Your Referral Code</h3>
+                <p>Share this code with friends and earn 10 coins when they sign up!</p>
+                <div class="referral-box">
+                    <input type="text" id="referralCode" readonly>
+                    <button class="btn btn-primary" onclick="copyReferralCode()">Copy</button>
+                </div>
+            </div>
+
+            <!-- Withdrawal Section -->
+            <div class="withdrawal-section">
+                <h3>Withdraw Earnings</h3>
+                <p>Minimum withdrawal: 50 coins (₹50)</p>
+                <form class="withdrawal-form" onsubmit="handleWithdrawal(event)">
+                    <div class="form-group">
+                        <label>UPI ID</label>
+                        <input type="text" id="upiId" placeholder="yourname@upi" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (Coins)</label>
+                        <input type="number" id="withdrawAmount" placeholder="Min 50 coins" min="50" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Withdraw</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Trust Section -->
+        <section class="trust-section">
+            <h2>Trusted by Thousands</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="number">50K+</div>
+                    <div>Active Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">₹10L+</div>
+                    <div>Total Paid</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">4.8★</div>
+                    <div>User Rating</div>
+                </div>
+            </div>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"QuickEarn is amazing! I earned ₹500 in just 2 weeks by referring friends."</p>
+                    <p><strong>- Rahul K.</strong></p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Instant UPI withdrawals. No fake promises like other apps."</p>
+                    <p><strong>- Priya S.</strong></p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Best earning app I've used. Daily bonus is a nice touch!"</p>
+                    <p><strong>- Amit M.</strong></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2 id="authTitle">Login</h2>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+            </div>
+            <form id="authForm" onsubmit="handleAuth(event)">
+                <div class="form-group" id="nameGroup" style="display: none;">
+                    <label>Name</label>
+                    <input type="text" id="name" placeholder="Your name">
+                </div>
+                <div class="form-group" id="referralGroup" style="display: none;">
+                    <label>Referral Code (Optional)</label>
+                    <input type="text" id="referralInput" placeholder="Enter referral code">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Min 6 characters" required>
+                </div>
+                <div class="form-group" id="confirmGroup" style="display: none;">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
+                </div>
+                <button type="submit" class="auth-submit" id="authSubmit">Login</button>
+            </form>
+            <button class="btn btn-secondary" onclick="hideAuthModal()" style="width: 100%; margin-top: 1rem;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc, increment, onSnapshot, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCKvtEWdfIcrB6LuV9wTjtfZzksKT-v1XE",
+            authDomain: "referearn-6769b.firebaseapp.com",
+            projectId: "referearn-6769b",
+            storageBucket: "referearn-6769b.firebasestorage.app",
+            messagingSenderId: "418818490601",
+            appId: "1:418818490601:web:49e5b26acccc6efcb47078"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let authMode = 'login';
+        let lastActionTime = 0;
+        const COOLDOWN = 3000; // 3 seconds
+
+        // Auth Modal Functions
+        window.showAuthModal = () => {
+            document.getElementById('authModal').classList.add('active');
+        };
+
+        window.hideAuthModal = () => {
+            document.getElementById('authModal').classList.remove('active');
+        };
+
+        window.switchAuthTab = (mode) => {
+            authMode = mode;
+            const tabs = document.querySelectorAll('.auth-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const nameGroup = document.getElementById('nameGroup');
+            const referralGroup = document.getElementById('referralGroup');
+            const confirmGroup = document.getElementById('confirmGroup');
+            const authTitle = document.getElementById('authTitle');
+            const authSubmit = document.getElementById('authSubmit');
+
+            if (mode === 'signup') {
+                nameGroup.style.display = 'block';
+                referralGroup.style.display = 'block';
+                confirmGroup.style.display = 'block';
+                authTitle.textContent = 'Sign Up';
+                authSubmit.textContent = 'Sign Up';
+            } else {
+                nameGroup.style.display = 'none';
+                referralGroup.style.display = 'none';
+                confirmGroup.style.display = 'none';
+                authTitle.textContent = 'Login';
+                authSubmit.textContent = 'Login';
+            }
+        };
+
+        // Auth Handler
+        window.handleAuth = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const btn = document.getElementById('authSubmit');
+
+            // Validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email', 'error');
+                return;
+            }
+            if (password.length < 6) {
+                showToast('Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            if (authMode === 'signup') {
+                const name = document.getElementById('name').value.trim();
+                const confirmPassword = document.getElementById('confirmPassword').value.trim();
+                const referralCode = document.getElementById('referralInput').value.trim();
+
+                if (!name) {
+                    showToast('Please enter your name', 'error');
+                    return;
+                }
+                if (password !== confirmPassword) {
+                    showToast('Passwords do not match', 'error');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = 'Creating account...';
+
+                try {
+                    const userCred = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCred.user;
+
+                    // Generate unique referral code
+                    const userReferralCode = 'QE' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+                    // Check if referral code is valid
+                    let referredBy = null;
+                    if (referralCode) {
+                        const q = query(collection(db, 'users'), where('referralCode', '==', referralCode));
+                        const querySnapshot = await getDocs(q);
+                        if (!querySnapshot.empty) {
+                            referredBy = referralCode;
+                            // Give bonus to referrer
+                            const referrerDoc = querySnapshot.docs[0];
+                            await updateDoc(doc(db, 'users', referrerDoc.id), {
+                                coins: increment(10)
+                            });
+                        }
+                    }
+
+                    await setDoc(doc(db, 'users', user.uid), {
+                        name,
+                        email,
+                        coins: 0,
+                        referralCode: userReferralCode,
+                        referredBy,
+                        createdAt: Date.now(),
+                        lastDailyBonus: 0
+                    });
+
+                    showToast('Account created successfully!', 'success');
+                    hideAuthModal();
+                } catch (error) {
+                    showToast(error.message, 'error');
+                }
+
+                btn.disabled = false;
+                btn.textContent = 'Sign Up';
+            } else {
+                btn.disabled = true;
+                btn.textContent = 'Logging in...';
+
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    showToast('Login successful!', 'success');
+                    hideAuthModal();
+                } catch (error) {
+                    showToast(error.message, 'error');
+                }
+
+                btn.disabled = false;
+                btn.textContent = 'Login';
+            }
+        };
+
+        // Logout
+        window.logout = async () => {
+            try {
+                await signOut(auth);
+                showToast('Logged out successfully', 'success');
+            } catch (error) {
+                showToast(error.message, 'error');
+            }
+        };
+
+        // Add Coins
+        window.addCoins = async (amount) => {
+            if (!auth.currentUser) {
+                showToast('Please login first', 'error');
+                return;
+            }
+
+            const now = Date.now();
+            if (now - lastActionTime < COOLDOWN) {
+                showToast('Please wait before earning again', 'error');
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+                    coins: increment(amount)
+                });
+                lastActionTime = now;
+                showToast(`+${amount} coins earned!`, 'success');
+            } catch (error) {
+                showToast(error.message, 'error');
+            }
+        };
+
+        // Earning Actions
+        window.handleRefer = () => {
+            const referralCode = document.getElementById('referralCode').value;
+            const shareText = `Join QuickEarn and earn real money! Use my referral code: ${referralCode}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'QuickEarn - Earn Money Online',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(shareText);
+                showToast('Referral link copied!', 'success');
+            }
+        };
+
+        window.handleDailyBonus = async () => {
+            if (!auth.currentUser) return;
+
+            const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
+            const userData = userDoc.data();
+            const today = new Date().toDateString();
+
+            if (userData.lastDailyBonus === today) {
+                showToast('Daily bonus already claimed!', 'error');
+                return;
+            }
+
+            await addCoins(5);
+            await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+                lastDailyBonus: today
+            });
+        };
+
+        window.handleWatchAd = async () => {
+            await addCoins(2);
+        };
+
+        window.copyReferralCode = () => {
+            const code = document.getElementById('referralCode').value;
+            navigator.clipboard.writeText(code);
+            showToast('Referral code copied!', 'success');
+        };
+
+        window.handleWithdrawal = async (e) => {
+            e.preventDefault();
+            if (!auth.currentUser) {
+                showToast('Please login first', 'error');
+                return;
+            }
+
+            const upiId = document.getElementById('upiId').value.trim();
+            const amount = parseInt(document.getElementById('withdrawAmount').value);
+
+            if (amount < 50) {
+                showToast('Minimum withdrawal is 50 coins', 'error');
+                return;
+            }
+
+            const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
+            const userData = userDoc.data();
+
+            if (userData.coins < amount) {
+                showToast('Insufficient coins', 'error');
+                return;
+            }
+
+            try {
+                // Deduct coins
+                await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+                    coins: increment(-amount)
+                });
+
+                // Create withdrawal request
+                await addDoc(collection(db, 'withdrawals'), {
+                    userId: auth.currentUser.uid,
+                    email: auth.currentUser.email,
+                    upiId,
+                    coins: amount,
+                    status: 'pending',
+                    createdAt: Date.now()
+                });
+
+                showToast('Withdrawal request submitted!', 'success');
+                document.getElementById('withdrawal-form').reset();
+            } catch (error) {
+                showToast(error.message, 'error');
+            }
+        };
+
+        // Toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Auth State Listener
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const userRef = doc(db, 'users', user.uid);
+                onSnapshot(userRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+
+                        // Update UI
+                        document.getElementById('heroSection').style.display = 'none';
+                        document.getElementById('dashboard').classList.add('active');
+                        document.getElementById('coinDisplay').style.display = 'flex';
+                        document.getElementById('loginBtn').style.display = 'none';
+                        document.getElementById('logoutBtn').style.display = 'block';
+
+                        document.getElementById('welcomeText').textContent = `Welcome ${data.name}! 👋`;
+                        document.getElementById('coinCount').textContent = data.coins;
+                        document.getElementById('dashboardCoins').textContent = data.coins;
+                        document.getElementById('referralCode').value = data.referralCode;
+                    }
+                });
+            } else {
+                document.getElementById('heroSection').style.display = 'block';
+                document.getElementById('dashboard').classList.remove('active');
+                document.getElementById('coinDisplay').style.display = 'none';
+                document.getElementById('loginBtn').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'none';
+            }
+        });
+
+        // Expose auth and db to window
+        window.auth = auth;
+        window.db = db;
+    </script>
+</body>
+</html>

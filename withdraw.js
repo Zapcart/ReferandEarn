@@ -27,21 +27,17 @@ class WithdrawSystem {
 
     async loadUserData() {
         try {
-            // Get user data from localStorage or backend
-            const storedUser = localStorage.getItem('zapcart_user');
-            if (storedUser) {
-                this.currentUser = JSON.parse(storedUser);
-            } else {
-                // Create guest user for demo
+            // User data is loaded via Firebase onSnapshot in withdraw.html
+            // This function is kept for compatibility but no longer uses localStorage
+            if (window.auth && window.auth.currentUser) {
+                // Coins are updated via Firebase onSnapshot
+                const coinEl = document.getElementById('coinCount');
                 this.currentUser = {
-                    id: 'guest_' + Date.now(),
-                    username: 'Guest User',
-                    coins: parseInt(localStorage.getItem('coinCount') || '0'),
-                    referralCode: 'ZAPCART' + Math.random().toString(36).substr(2, 6).toUpperCase(),
-                    joinedAt: new Date().toISOString(),
+                    id: window.auth.currentUser.uid,
+                    username: 'User',
+                    coins: coinEl ? parseInt(coinEl.textContent) || 0 : 0,
                     withdrawHistory: []
                 };
-                await this.saveUserData();
             }
         } catch (error) {
             console.error('Error loading user data:', error);
@@ -51,11 +47,9 @@ class WithdrawSystem {
 
     async saveUserData() {
         try {
-            localStorage.setItem('zapcart_user', JSON.stringify(this.currentUser));
-            localStorage.setItem('coinCount', this.currentUser.coins.toString());
-            
-            // In production, save to backend
-            // await this.saveToBackend(this.currentUser);
+            // Coins are saved via Firebase increment in addCoins function
+            // This function is kept for compatibility but no longer uses localStorage
+            // Withdraw history would be saved to Firestore in production
         } catch (error) {
             console.error('Error saving user data:', error);
         }
@@ -351,13 +345,9 @@ class WithdrawSystem {
             timestamp: new Date().toISOString()
         };
         
-        // Save to localStorage for demo
-        const transactions = JSON.parse(localStorage.getItem('zapcart_transactions') || '[]');
-        transactions.push(transaction);
-        localStorage.setItem('zapcart_transactions', JSON.stringify(transactions));
-        
-        // In production, save to backend
+        // In production, save to Firestore
         // await this.saveTransactionToBackend(transaction);
+        console.log('Transaction logged:', transaction);
     }
 
     showToast(message, type = 'info') {

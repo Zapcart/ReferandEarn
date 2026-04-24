@@ -38,47 +38,23 @@ const SessionManager = {
 };
 
 // ============================================
-// COIN SYSTEM (Firebase Integration)
+// COIN SYSTEM (Firebase Only - No localStorage)
 // ============================================
 
 const CoinSystem = {
-    STORAGE_KEY: 'zapcart_coin_data',
-    
-    // Initialize coin data structure
-    initializeCoinData() {
-        const existingData = localStorage.getItem(this.STORAGE_KEY);
-        if (!existingData) {
-            const initialData = {
-                coins: 0,
-                lastClaim: '',
-                watchCount: 0,
-                lastShareDate: '',
-                dailyEarned: 0,
-                lastActionTime: 0
-            };
-            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(initialData));
-            return initialData;
-        }
-        return JSON.parse(existingData);
-    },
-    
-    // Get user coin data
-    getCoinData() {
-        return this.initializeCoinData();
-    },
-    
-    // Add coins via Firebase
+    // Add coins via Firebase only
     async addCoins(amount, actionType = 'general') {
         if (!window.auth || !window.auth.currentUser) {
-            alert('Login first');
+            alert('Please login first');
             return false;
         }
         
         try {
-            // Call Firebase addCoins function
+            // Call Firebase addCoins function (uses Firestore increment)
             await window.addCoins(amount);
             return true;
         } catch (error) {
+            console.error('Error adding coins:', error);
             alert('Error adding coins');
             return false;
         }
@@ -272,23 +248,10 @@ function updateUIForLoggedOutUser() {
 // EARNING ACTIONS (Protected)
 // ============================================
 
-function handleReferAction() {
-    if (!SessionManager.isLoggedIn()) {
-        showToast('Please login first', 'error');
-        showLoginModal();
-        return;
-    }
-    
-    // Get referral code from Firebase data
-    const referralCodeEl = document.getElementById('userReferralCode');
-    const referralCode = referralCodeEl ? referralCodeEl.value : '';
-    openRealSharePanel(referralCode);
-}
-
 function handleWatchPhotos() {
     if (!window.auth || !window.auth.currentUser) {
         alert("Please login to start earning");
-        scrollToLoginSection();
+        showLoginModal();
         return;
     }
     
@@ -309,7 +272,7 @@ function handleWatchPhotos() {
 function handleWatchAds() {
     if (!window.auth || !window.auth.currentUser) {
         alert("Please login to start earning");
-        scrollToLoginSection();
+        showLoginModal();
         return;
     }
     
@@ -329,7 +292,7 @@ function handleWatchAds() {
 function handleShareAction() {
     if (!window.auth || !window.auth.currentUser) {
         alert("Please login to start earning");
-        scrollToLoginSection();
+        showLoginModal();
         return;
     }
     
@@ -346,6 +309,31 @@ function handleShareAction() {
     window.addCoins(CONFIG.SHARE_REWARD);
     
     // Open share options
+    const referralCodeEl = document.getElementById('userReferralCode');
+    const referralCode = referralCodeEl ? referralCodeEl.value : '';
+    openRealSharePanel(referralCode);
+}
+
+function handleReferAction() {
+    if (!window.auth || !window.auth.currentUser) {
+        showToast('Please login first', 'error');
+        showLoginModal();
+        return;
+    }
+    
+    if (!AntiGlitch.canPerformAction()) {
+        alert('Wait 5 seconds');
+        return;
+    }
+    
+    const button = event.target.closest('button');
+    AntiGlitch.disableButton(button);
+    AntiGlitch.recordAction();
+    
+    // Call Firebase addCoins
+    window.addCoins(CONFIG.REFERRAL_REWARD);
+    
+    // Get referral code from Firebase data
     const referralCodeEl = document.getElementById('userReferralCode');
     const referralCode = referralCodeEl ? referralCodeEl.value : '';
     openRealSharePanel(referralCode);
@@ -514,12 +502,13 @@ function scrollToEarningMethods() {
     }
 }
 
-function scrollToLoginSection() {
-    showLoginModal();
+function showLoginModal() {
+    const modal = document.getElementById('authModal');
+    modal.style.display = 'flex';
 }
 
 async function startWatchingPhotos() {
-    if (!SessionManager.isLoggedIn()) {
+    if (!window.auth || !window.auth.currentUser) {
         showToast('Please login first', 'error');
         showLoginModal();
         return;

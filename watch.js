@@ -86,20 +86,16 @@ class WatchPage {
 
     async loadUserData() {
         try {
-            // Get user data from localStorage or backend
-            const storedUser = localStorage.getItem('zapcart_user');
-            if (storedUser) {
-                this.currentUser = JSON.parse(storedUser);
-            } else {
-                // Create guest user for demo
+            // User data is loaded via Firebase onSnapshot in watch.html
+            // This function is kept for compatibility but no longer uses localStorage
+            if (window.auth && window.auth.currentUser) {
+                // Coins are updated via Firebase onSnapshot
+                const coinEl = document.getElementById('coinCount');
                 this.currentUser = {
-                    id: 'guest_' + Date.now(),
-                    username: 'Guest User',
-                    coins: parseInt(localStorage.getItem('coinCount') || '0'),
-                    referralCode: 'ZAPCART' + Math.random().toString(36).substr(2, 6).toUpperCase(),
-                    joinedAt: new Date().toISOString()
+                    id: window.auth.currentUser.uid,
+                    username: 'User',
+                    coins: coinEl ? parseInt(coinEl.textContent) || 0 : 0
                 };
-                await this.saveUserData();
             }
         } catch (error) {
             console.error('Error loading user data:', error);
@@ -109,11 +105,8 @@ class WatchPage {
 
     async saveUserData() {
         try {
-            localStorage.setItem('zapcart_user', JSON.stringify(this.currentUser));
-            localStorage.setItem('coinCount', this.currentUser.coins.toString());
-            
-            // In production, save to backend
-            // await this.saveToBackend(this.currentUser);
+            // Coins are saved via Firebase increment in addCoins function
+            // This function is kept for compatibility but no longer uses localStorage
         } catch (error) {
             console.error('Error saving user data:', error);
         }
@@ -158,13 +151,13 @@ class WatchPage {
 
     async awardCoins(amount, photoId) {
         try {
-            // Use Firebase addCoins function
+            // Use Firebase addCoins function only
             if (window.addCoins) {
                 await window.addCoins(amount);
             } else {
-                // Fallback to localStorage if Firebase not available
-                this.currentUser.coins += amount;
-                await this.saveUserData();
+                console.error('Firebase addCoins not available');
+                this.showToast('Error: Firebase not initialized', 'error');
+                return;
             }
             
             // Update UI (coin count is updated by Firebase onSnapshot)
@@ -220,13 +213,9 @@ class WatchPage {
             timestamp: new Date().toISOString()
         };
         
-        // Save to localStorage for demo
-        const photoViews = JSON.parse(localStorage.getItem('zapcart_photo_views') || '[]');
-        photoViews.push(photoView);
-        localStorage.setItem('zapcart_photo_views', JSON.stringify(photoViews));
-        
-        // In production, save to backend
+        // In production, save to Firestore
         // await this.savePhotoViewToBackend(photoView);
+        console.log('Photo view logged:', photoView);
     }
 
     logTransaction(type, amount, metadata) {
@@ -239,13 +228,9 @@ class WatchPage {
             timestamp: new Date().toISOString()
         };
         
-        // Save to localStorage for demo
-        const transactions = JSON.parse(localStorage.getItem('zapcart_transactions') || '[]');
-        transactions.push(transaction);
-        localStorage.setItem('zapcart_transactions', JSON.stringify(transactions));
-        
-        // In production, save to backend
+        // In production, save to Firestore
         // await this.saveTransactionToBackend(transaction);
+        console.log('Transaction logged:', transaction);
     }
 
     showToast(message, type = 'info') {
