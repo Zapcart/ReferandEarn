@@ -42,6 +42,31 @@ const SessionManager = {
 // ============================================
 
 const CoinSystem = {
+    STORAGE_KEY: 'zapcart_coin_data',
+    
+    // Initialize coin data structure
+    initializeCoinData() {
+        const existingData = localStorage.getItem(this.STORAGE_KEY);
+        if (!existingData) {
+            const initialData = {
+                coins: 0,
+                lastClaim: '',
+                watchCount: 0,
+                lastShareDate: '',
+                dailyEarned: 0,
+                lastActionTime: 0
+            };
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(initialData));
+            return initialData;
+        }
+        return JSON.parse(existingData);
+    },
+    
+    // Get user coin data
+    getCoinData() {
+        return this.initializeCoinData();
+    },
+    
     // Add coins via Firebase
     async addCoins(amount, actionType = 'general') {
         if (!window.auth || !window.auth.currentUser) {
@@ -160,11 +185,11 @@ function switchAuthTab(mode) {
 function handleAuth(event) {
     event.preventDefault();
     
-    const email = document.getElementById('authEmail').value;
-    const password = document.getElementById('authPassword').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
     
     if (currentAuthMode === 'signup') {
-        const confirmPassword = document.getElementById('authConfirmPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
         if (password !== confirmPassword) {
             showToast('Passwords do not match', 'error');
             return;
@@ -199,9 +224,8 @@ function handleAuth(event) {
 }
 
 function logout() {
-    window.logout().then(() => {
-        updateUIForLoggedOutUser();
-    });
+    // Call Firebase logout function
+    window.logout();
 }
 
 function updateUIForLoggedInUser(userData) {
@@ -248,9 +272,9 @@ function handleReferAction() {
 }
 
 function handleWatchPhotos() {
-    if (!SessionManager.isLoggedIn()) {
-        alert('Please login first');
-        showLoginModal();
+    if (!window.auth || !window.auth.currentUser) {
+        alert("Please login to start earning");
+        scrollToLoginSection();
         return;
     }
     
@@ -268,9 +292,9 @@ function handleWatchPhotos() {
 }
 
 function handleWatchAds() {
-    if (!SessionManager.isLoggedIn()) {
-        alert('Please login first');
-        showLoginModal();
+    if (!window.auth || !window.auth.currentUser) {
+        alert("Please login to start earning");
+        scrollToLoginSection();
         return;
     }
     
@@ -287,9 +311,9 @@ function handleWatchAds() {
 }
 
 function handleShareAction() {
-    if (!SessionManager.isLoggedIn()) {
-        alert('Please login first');
-        showLoginModal();
+    if (!window.auth || !window.auth.currentUser) {
+        alert("Please login to start earning");
+        scrollToLoginSection();
         return;
     }
     
@@ -305,8 +329,9 @@ function handleShareAction() {
     window.addCoins(CONFIG.SHARE_REWARD);
     
     // Open share options
-    const userData = SessionManager.getCurrentUser();
-    openRealSharePanel(''); // Will be updated by Firebase
+    const referralCodeEl = document.getElementById('userReferralCode');
+    const referralCode = referralCodeEl ? referralCodeEl.value : '';
+    openRealSharePanel(referralCode);
 }
 
 // ============================================
@@ -472,6 +497,10 @@ function scrollToEarningMethods() {
     }
 }
 
+function scrollToLoginSection() {
+    showLoginModal();
+}
+
 async function startWatchingPhotos() {
     if (!SessionManager.isLoggedIn()) {
         showToast('Please login first', 'error');
@@ -539,15 +568,10 @@ const Utils = {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Show hero section by default (earning methods visible)
+    document.getElementById('heroSection').style.display = 'block';
+    document.getElementById('userDashboard').style.display = 'none';
+    
     // Firebase auth state listener will handle UI updates
     // The onAuthStateChanged in the Firebase script will update the UI automatically
-    
-    // Show login modal if not logged in
-    setTimeout(() => {
-        if (!SessionManager.isLoggedIn()) {
-            // User is not logged in, show hero section
-            document.getElementById('heroSection').style.display = 'block';
-            document.getElementById('userDashboard').style.display = 'none';
-        }
-    }, 1000);
 });
