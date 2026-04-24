@@ -117,7 +117,11 @@
                 <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
             </div>
             
-            <form id="authForm" onsubmit="handleAuth(event)" class="auth-form">
+            <form id="authForm" onsubmit="event.preventDefault()" class="auth-form">
+                <div class="form-group" id="nameGroup" style="display: none;">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter your name">
+                </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" required placeholder="Enter your email">
@@ -130,7 +134,7 @@
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" placeholder="Confirm your password" minlength="6">
                 </div>
-                <button type="submit" class="auth-submit-btn" id="authSubmitBtn">
+                <button type="button" class="auth-submit-btn" id="authSubmitBtn" onclick="handleAuth()">
                     <span class="btn-icon">🔐</span>
                     <span>Login</span>
                 </button>
@@ -511,9 +515,10 @@
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-      import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-      import { getFirestore, doc, setDoc, updateDoc, onSnapshot, increment, getDocs, query, where, collection } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+      import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+      import { getFirestore, doc, setDoc, updateDoc, onSnapshot, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
+      // CONFIG
       const firebaseConfig = {
         apiKey: "AIzaSyCKvtEWdfIcrB6LuV9wTjtfZzksKT-v1XE",
         authDomain: "referearn-6769b.firebaseapp.com",
@@ -532,85 +537,76 @@
         return "ZAP" + Math.random().toString(36).substring(2,8).toUpperCase();
       }
 
-      // Get Referral from URL
-      function getReferral() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get("ref");
-      }
+      // ✅ SIGNUP
+      window.signup = async (name, email, password) => {
+        try {
+          const userCred = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCred.user;
 
-      // Signup
-      window.signup = async (email, password) => {
-        const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCred.user;
-
-        let ref = getReferral();
-
-        await setDoc(doc(db, "users", user.uid), {
-          coins: 0,
-          referralCode: generateReferralCode(),
-          referredBy: ref || null
-        });
-
-        // Referral Bonus
-        if (ref) {
-          const q = query(collection(db, "users"), where("referralCode", "==", ref));
-          const snapshot = await getDocs(q);
-
-          snapshot.forEach(async (docSnap) => {
-            await updateDoc(docSnap.ref, {
-              coins: increment(20)
-            });
+          await setDoc(doc(db, "users", user.uid), {
+            name: name,
+            email: email,
+            coins: 0,
+            referralCode: generateReferralCode(),
+            referredBy: null,
+            createdAt: serverTimestamp()
           });
+
+          alert("Signup Success ✅");
+          closeAuthModal();
+        } catch (e) {
+          alert(e.message);
+          console.log(e);
+          throw e;
         }
-
-        alert("Signup Success ✅");
       };
 
-      // Login
+      // ✅ LOGIN
       window.login = async (email, password) => {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert("Login Success ✅");
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          alert("Login Success ✅");
+          closeAuthModal();
+        } catch (e) {
+          alert(e.message);
+          console.log(e);
+          throw e;
+        }
       };
 
-      // Logout
+      // ✅ LOGOUT
       window.logout = async () => {
         await signOut(auth);
         alert("Logged out");
       };
 
-      // Add Coins
+      // ✅ COINS
       window.addCoins = async (amount) => {
         const user = auth.currentUser;
         if (!user) return alert("Login first");
 
         const userRef = doc(db, "users", user.uid);
-
         await updateDoc(userRef, {
           coins: increment(amount)
         });
       };
 
-      // Live Coin Update
+      // ✅ LIVE UPDATE
       onAuthStateChanged(auth, (user) => {
         if (user) {
           const userRef = doc(db, "users", user.uid);
 
           onSnapshot(userRef, (docSnap) => {
             if (docSnap.exists()) {
-              document.getElementById("coinCount").innerText = docSnap.data().coins;
-              
-              // Update referral code in dashboard
               const data = docSnap.data();
-              const referralCodeEl = document.getElementById('userReferralCode');
-              const referralLinkEl = document.getElementById('referralLink');
-              if (referralCodeEl && data.referralCode) {
-                referralCodeEl.value = data.referralCode;
-                referralLinkEl.textContent = `https://yourdomain.com/?ref=${data.referralCode}`;
-              }
+              document.getElementById("coinCount").innerText = data.coins;
               
               // Update UI for logged in user
               if (typeof updateUIForLoggedInUser === 'function') {
-                updateUIForLoggedInUser({ email: user.email });
+                updateUIForLoggedInUser({ 
+                  email: user.email,
+                  name: data.name || user.email
+                });
               }
             }
           });
@@ -621,9 +617,6 @@
           }
         }
       });
-
-      window.auth = auth;
-      window.db = db;
     </script>
 </body>
 </html>

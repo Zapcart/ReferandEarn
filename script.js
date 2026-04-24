@@ -97,6 +97,7 @@ const CoinSystem = {
 
 const AntiGlitch = {
     disabledButtons: new Set(),
+    lastActionTime: 0,
     
     // Disable button with cooldown
     disableButton(button, duration = CONFIG.COOLDOWN_TIME) {
@@ -115,9 +116,13 @@ const AntiGlitch = {
     
     // Check if action is allowed
     canPerformAction() {
-        const data = CoinSystem.getCoinData();
         const now = Date.now();
-        return (now - data.lastActionTime) >= CONFIG.COOLDOWN_TIME;
+        return (now - this.lastActionTime) >= CONFIG.COOLDOWN_TIME;
+    },
+    
+    // Record action time
+    recordAction() {
+        this.lastActionTime = Date.now();
     }
 };
 
@@ -167,59 +172,67 @@ function switchAuthTab(mode) {
     const title = document.getElementById('authTitle');
     const submitBtn = document.getElementById('authSubmitBtn');
     const confirmGroup = document.getElementById('confirmPasswordGroup');
+    const nameGroup = document.getElementById('nameGroup');
     const footerText = document.getElementById('authFooterText');
     
     if (mode === 'login') {
         title.textContent = 'Login';
         submitBtn.innerHTML = '<span class="btn-icon">🔐</span><span>Login</span>';
         confirmGroup.style.display = 'none';
+        nameGroup.style.display = 'none';
         footerText.innerHTML = "Don't have an account? <a href=\"#\" onclick=\"switchAuthTab('signup')\">Sign Up</a>";
     } else {
         title.textContent = 'Sign Up';
         submitBtn.innerHTML = '<span class="btn-icon">📝</span><span>Sign Up</span>';
         confirmGroup.style.display = 'block';
+        nameGroup.style.display = 'block';
         footerText.innerHTML = "Already have an account? <a href=\"#\" onclick=\"switchAuthTab('login')\">Login</a>";
     }
 }
 
-function handleAuth(event) {
-    event.preventDefault();
+function handleAuth() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const submitBtn = document.getElementById('authSubmitBtn');
     
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    if (currentAuthMode === 'signup') {
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        if (password !== confirmPassword) {
-            showToast('Passwords do not match', 'error');
-            return;
-        }
+    if (!email || !password) {
+        alert('Please fill in all fields');
+        return;
     }
     
-    // Show loading
-    const submitBtn = document.getElementById('authSubmitBtn');
+    // Show loading state
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="btn-icon">⏳</span><span>Loading...</span>';
+    submitBtn.innerHTML = '<span class="btn-icon">⏳</span><span>Processing...</span>';
     
-    // Call Firebase auth functions
     if (currentAuthMode === 'signup') {
-        window.signup(email, password).then(() => {
-            closeAuthModal();
+        const name = document.getElementById('name').value.trim();
+        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+        
+        if (!name) {
+            alert('Please enter your name');
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span class="btn-icon">🔐</span><span>Login</span>';
-        }).catch(() => {
+            submitBtn.innerHTML = '<span class="btn-icon">📝</span><span>Sign Up</span>';
+            return;
+        }
+        
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span class="btn-icon">🔐</span><span>Login</span>';
-        });
+            submitBtn.innerHTML = '<span class="btn-icon">📝</span><span>Sign Up</span>';
+            return;
+        }
+        
+        window.signup(name, email, password)
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="btn-icon">📝</span><span>Sign Up</span>';
+            });
     } else {
-        window.login(email, password).then(() => {
-            closeAuthModal();
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span class="btn-icon">🔐</span><span>Login</span>';
-        }).catch(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span class="btn-icon">🔐</span><span>Login</span>';
-        });
+        window.login(email, password)
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="btn-icon">🔐</span><span>Login</span>';
+            });
     }
 }
 
@@ -238,8 +251,9 @@ function updateUIForLoggedInUser(userData) {
     document.getElementById('logoutBtn').style.display = 'flex';
     document.getElementById('withdrawBtn').style.display = 'flex';
     
-    // Update dashboard info
-    document.getElementById('userEmailDisplay').textContent = userData.email;
+    // Update dashboard info - show name instead of email
+    const displayName = userData.name || userData.email;
+    document.getElementById('userEmailDisplay').textContent = `Welcome ${displayName} 👋`;
     // Referral code will be updated by Firebase onSnapshot
 }
 
@@ -285,6 +299,7 @@ function handleWatchPhotos() {
     
     const button = event.target.closest('button');
     AntiGlitch.disableButton(button);
+    AntiGlitch.recordAction();
     
     // Call Firebase addCoins
     window.addCoins(CONFIG.WATCH_PHOTO_REWARD);
@@ -305,6 +320,7 @@ function handleWatchAds() {
     
     const button = event.target.closest('button');
     AntiGlitch.disableButton(button);
+    AntiGlitch.recordAction();
     
     // Call Firebase addCoins
     window.addCoins(CONFIG.WATCH_AD_REWARD);
@@ -324,6 +340,7 @@ function handleShareAction() {
     
     const button = event.target.closest('button');
     AntiGlitch.disableButton(button);
+    AntiGlitch.recordAction();
     
     // Call Firebase addCoins
     window.addCoins(CONFIG.SHARE_REWARD);
