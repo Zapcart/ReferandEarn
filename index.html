@@ -149,7 +149,7 @@
     <!-- User Dashboard (Hidden until login) -->
     <div id="userDashboard" class="user-dashboard" style="display: none;">
         <div class="dashboard-header">
-            <h2>Welcome Back!</h2>
+            <h2 id="welcomeText">Welcome Back!</h2>
             <p id="userEmailDisplay">user@example.com</p>
         </div>
         
@@ -516,7 +516,7 @@
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
       import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-      import { getFirestore, doc, setDoc, updateDoc, onSnapshot, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+      import { getFirestore, doc, setDoc, updateDoc, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
       // CONFIG
       const firebaseConfig = {
@@ -532,13 +532,36 @@
       const auth = getAuth(app);
       const db = getFirestore(app);
 
-      // Generate Referral Code
-      function generateReferralCode() {
-        return "ZAP" + Math.random().toString(36).substring(2,8).toUpperCase();
-      }
+      // 🔧 1. LOGIN FUNCTION FIX
+      window.login = async () => {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
 
-      // ✅ SIGNUP
-      window.signup = async (name, email, password) => {
+        const btn = document.getElementById("authSubmitBtn");
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          alert("Login Success ✅");
+        } catch (err) {
+          alert(err.message);
+        }
+
+        btn.innerText = "Login";
+        btn.disabled = false;
+      };
+
+      // 🔧 2. SIGNUP FIX (NO FREEZE)
+      window.signup = async () => {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        const btn = document.getElementById("authSubmitBtn");
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+
         try {
           const userCred = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCred.user;
@@ -547,34 +570,20 @@
             name: name,
             email: email,
             coins: 0,
-            referralCode: generateReferralCode(),
-            referredBy: null,
-            createdAt: serverTimestamp()
+            referralCode: "ZAP" + Math.random().toString(36).substring(2,8).toUpperCase(),
+            createdAt: Date.now()
           });
 
           alert("Signup Success ✅");
-          closeAuthModal();
-        } catch (e) {
-          alert(e.message);
-          console.log(e);
-          throw e;
+        } catch (err) {
+          alert(err.message);
         }
+
+        btn.innerText = "Sign Up";
+        btn.disabled = false;
       };
 
-      // ✅ LOGIN
-      window.login = async (email, password) => {
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-          alert("Login Success ✅");
-          closeAuthModal();
-        } catch (e) {
-          alert(e.message);
-          console.log(e);
-          throw e;
-        }
-      };
-
-      // ✅ LOGOUT
+      // 🔧 4. LOGOUT FUNCTION
       window.logout = async () => {
         await signOut(auth);
         alert("Logged out");
@@ -591,30 +600,53 @@
         });
       };
 
-      // ✅ LIVE UPDATE
+      // 🔥 3. SABSE IMPORTANT FIX (Auth State Control)
       onAuthStateChanged(auth, (user) => {
         if (user) {
+          console.log("User logged in:", user.email);
+
           const userRef = doc(db, "users", user.uid);
 
           onSnapshot(userRef, (docSnap) => {
             if (docSnap.exists()) {
               const data = docSnap.data();
+
               document.getElementById("coinCount").innerText = data.coins;
-              
-              // Update UI for logged in user
-              if (typeof updateUIForLoggedInUser === 'function') {
-                updateUIForLoggedInUser({ 
-                  email: user.email,
-                  name: data.name || user.email
-                });
+
+              // 👇 NAME SHOW
+              const welcomeText = document.getElementById("welcomeText");
+              if (welcomeText) {
+                welcomeText.innerText = "Welcome " + data.name + " 👋";
               }
             }
           });
+
+          // 👇 LOGIN MODAL HIDE
+          document.getElementById("authModal").style.display = "none";
+
+          // Show dashboard, hide hero
+          document.getElementById('userDashboard').style.display = 'block';
+          document.getElementById('heroSection').style.display = 'none';
+
+          // Update header buttons
+          document.getElementById('loginBtn').style.display = 'none';
+          document.getElementById('logoutBtn').style.display = 'flex';
+          document.getElementById('withdrawBtn').style.display = 'flex';
+
         } else {
-          // User is logged out
-          if (typeof updateUIForLoggedOutUser === 'function') {
-            updateUIForLoggedOutUser();
-          }
+          console.log("User logged out");
+
+          // 👇 SHOW LOGIN AGAIN
+          document.getElementById("authModal").style.display = "none";
+
+          // Hide dashboard, show hero
+          document.getElementById('userDashboard').style.display = 'none';
+          document.getElementById('heroSection').style.display = 'block';
+
+          // Update header buttons
+          document.getElementById('loginBtn').style.display = 'flex';
+          document.getElementById('logoutBtn').style.display = 'none';
+          document.getElementById('withdrawBtn').style.display = 'none';
         }
       });
     </script>

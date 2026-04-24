@@ -326,5 +326,43 @@
     <script src="script.js"></script>
     <script src="random-photo-system.js"></script>
     <script src="watch.js"></script>
+
+    <!-- Firebase Authentication -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+      import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCKvtEWdfIcrB6LuV9wTjtfZzksKT-v1XE",
+        authDomain: "referearn-6769b.firebaseapp.com",
+        projectId: "referearn-6769b",
+        storageBucket: "referearn-6769b.firebasestorage.app",
+        messagingSenderId: "418818490601",
+        appId: "1:418818490601:web:49e5b26acccc6efcb47078"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Check auth state
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const userRef = doc(db, "users", user.uid);
+          onSnapshot(userRef, (docSnap) => {
+            if (docSnap.exists()) {
+              document.getElementById("coinCount").innerText = docSnap.data().coins;
+            }
+          });
+        } else {
+          // Redirect to home if not logged in
+          window.location.href = "index.html";
+        }
+      });
+
+      window.auth = auth;
+      window.db = db;
+    </script>
 </body>
 </html>

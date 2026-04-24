@@ -158,16 +158,16 @@ class WatchPage {
 
     async awardCoins(amount, photoId) {
         try {
-            // Update user coins
-            this.currentUser.coins += amount;
+            // Use Firebase addCoins function
+            if (window.addCoins) {
+                await window.addCoins(amount);
+            } else {
+                // Fallback to localStorage if Firebase not available
+                this.currentUser.coins += amount;
+                await this.saveUserData();
+            }
             
-            // Save to backend (in production)
-            // await this.saveCoinTransaction(photoId, amount);
-            
-            // Save to localStorage
-            await this.saveUserData();
-            
-            // Update UI
+            // Update UI (coin count is updated by Firebase onSnapshot)
             this.updateCoinDisplay();
             
             // Show success message

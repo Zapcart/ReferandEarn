@@ -195,14 +195,24 @@ function handleAuth() {
     const password = document.getElementById('password').value.trim();
     const submitBtn = document.getElementById('authSubmitBtn');
     
+    // Validation
     if (!email || !password) {
         alert('Please fill in all fields');
         return;
     }
     
-    // Show loading state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="btn-icon">⏳</span><span>Processing...</span>';
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        return;
+    }
+    
+    // Password length validation
+    if (password.length < 6) {
+        alert('Password must be at least 6 characters');
+        return;
+    }
     
     if (currentAuthMode === 'signup') {
         const name = document.getElementById('name').value.trim();
@@ -210,29 +220,19 @@ function handleAuth() {
         
         if (!name) {
             alert('Please enter your name');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span class="btn-icon">📝</span><span>Sign Up</span>';
             return;
         }
         
         if (password !== confirmPassword) {
             alert('Passwords do not match');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span class="btn-icon">📝</span><span>Sign Up</span>';
             return;
         }
         
-        window.signup(name, email, password)
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span class="btn-icon">📝</span><span>Sign Up</span>';
-            });
+        // Call Firebase signup function (handles loading internally)
+        window.signup();
     } else {
-        window.login(email, password)
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span class="btn-icon">🔐</span><span>Login</span>';
-            });
+        // Call Firebase login function (handles loading internally)
+        window.login();
     }
 }
 
