@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickEarn - Earn Money Online</title>
+    <meta name="description" content="Earn real money by referring friends, daily check-ins, and watching ads. Quick withdrawal via UPI.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">QuickEarn</span>
+            </div>
+            
+            <nav class="header-nav" id="headerNav">
+                <!-- Dynamic content based on auth state -->
+            </nav>
+            
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown" id="profileDropdown" style="display: none;">
+                <button class="profile-trigger" onclick="UI.toggleProfileDropdown()">
+                    <img src="" alt="Profile" class="profile-pic" id="headerProfilePic">
+                    <span class="profile-name" id="headerProfileName">User</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div class="dropdown-header">
+                        <img src="" alt="Profile" class="dropdown-profile-pic" id="dropdownProfilePic">
+                        <div class="dropdown-user-info">
+                            <div class="dropdown-user-name" id="dropdownUserName">User</div>
+                            <div class="dropdown-user-username" id="dropdownUsername">@username</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item" onclick="UI.showProfileModal()">
+                        <span class="dropdown-icon">👤</span>
+                        Edit Profile
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="UI.showDashboard()">
+                        <span class="dropdown-icon">📊</span>
+                        Dashboard
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-danger" onclick="Auth.logout()">
+                        <span class="dropdown-icon">🚪</span>
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Landing Page -->
+        <section class="landing-page" id="landingPage">
+            <div class="landing-hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Earn Real Money Online</h1>
+                    <p class="hero-subtitle">Refer friends, complete daily tasks, and withdraw instantly via UPI. Trusted by 50,000+ users.</p>
+                    <button class="btn btn-primary btn-large" onclick="UI.showAuthModal('signup')">
+                        Start Earning Now
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+                <div class="hero-visual">
+                    <div class="coin-animation">
+                        <div class="coin coin-1">🪙</div>
+                        <div class="coin coin-2">🪙</div>
+                        <div class="coin coin-3">🪙</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <section class="features-section">
+                <div class="section-header">
+                    <h2>How It Works</h2>
+                    <p>Simple steps to start earning</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Refer Friends</h3>
+                        <p>Share your unique referral code and earn 10 coins for each friend who joins</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎁</div>
+                        <h3>Daily Bonus</h3>
+                        <p>Claim your daily check-in bonus of 5 coins every 24 hours</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📺</div>
+                        <h3>Watch Ads</h3>
+                        <p>Watch short ads and earn 2 coins per view</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trust Section -->
+            <section class="trust-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">₹10L+</div>
+                        <div class="stat-label">Total Paid</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.8★</div>
+                        <div class="stat-label">User Rating</div>
+                    </div>
+                </div>
+
+                <div class="testimonials">
+                    <h2>What Users Say</h2>
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                            <p class="testimonial-text">"QuickEarn is amazing! I earned ₹500 in just 2 weeks by referring friends."</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">RK</div>
+                                <div class="author-info">
+                                    <div class="author-name">Rahul K.</div>
+                                    <div class="author-location">Mumbai</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                            <p class="testimonial-text">"Instant UPI withdrawals. No fake promises like other apps."</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">PS</div>
+                                <div class="author-info">
+                                    <div class="author-name">Priya S.</div>
+                                    <div class="author-location">Delhi</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                            <p class="testimonial-text">"Best earning app I've used. Daily bonus is a nice touch!"</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">AM</div>
+                                <div class="author-info">
+                                    <div class="author-name">Amit M.</div>
+                                    <div class="author-location">Bangalore</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Dashboard -->
+        <section class="dashboard" id="dashboard" style="display: none;">
+            <div class="dashboard-container">
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <div class="welcome-content">
+                        <h2 id="welcomeText">Welcome back! 👋</h2>
+                        <p>Start earning by completing tasks below</p>
+                    </div>
+                    <div class="coin-balance-card">
+                        <div class="balance-label">Total Coins</div>
+                        <div class="balance-amount" id="dashboardCoins">0</div>
+                        <div class="balance-value">≈ ₹<span id="rupeeValue">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Earning Methods -->
+                <div class="earning-section">
+                    <h3>Earning Methods</h3>
+                    <div class="earning-grid">
+                        <div class="earning-card" onclick="Earning.handleRefer()">
+                            <div class="earning-icon">👥</div>
+                            <div class="earning-info">
+                                <h4>Refer & Earn</h4>
+                                <p class="earning-reward">+10 coins per referral</p>
+                            </div>
+                            <div class="earning-action">
+                                <span class="action-text">Share</span>
+                                <span class="action-icon">→</span>
+                            </div>
+                        </div>
+                        <div class="earning-card" onclick="Earning.handleDailyBonus()">
+                            <div class="earning-icon">🎁</div>
+                            <div class="earning-info">
+                                <h4>Daily Bonus</h4>
+                                <p class="earning-reward">+5 coins daily</p>
+                            </div>
+                            <div class="earning-action">
+                                <span class="action-text" id="dailyBonusText">Claim</span>
+                                <span class="action-icon">→</span>
+                            </div>
+                        </div>
+                        <div class="earning-card" onclick="Earning.handleWatchAd()">
+                            <div class="earning-icon">📺</div>
+                            <div class="earning-info">
+                                <h4>Watch Ad</h4>
+                                <p class="earning-reward">+2 coins per ad</p>
+                            </div>
+                            <div class="earning-action">
+                                <span class="action-text">Watch</span>
+                                <span class="action-icon">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Referral Section -->
+                <div class="referral-section">
+                    <h3>Your Referral Code</h3>
+                    <p class="referral-description">Share this code with friends and earn 10 coins when they sign up!</p>
+                    <div class="referral-box">
+                        <input type="text" id="referralCode" readonly class="referral-input">
+                        <button class="btn btn-secondary" onclick="UI.copyReferralCode()">
+                            <span class="btn-icon">📋</span>
+                            Copy
+                        </button>
+                        <button class="btn btn-primary" onclick="Earning.shareReferral()">
+                            <span class="btn-icon">📤</span>
+                            Share
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Withdrawal Section -->
+                <div class="withdrawal-section">
+                    <h3>Withdraw Earnings</h3>
+                    <p class="withdrawal-description">Minimum withdrawal: 50 coins (₹5)</p>
+                    <form class="withdrawal-form" onsubmit="Earning.handleWithdrawal(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="upiId">UPI ID</label>
+                                <input type="text" id="upiId" placeholder="yourname@upi" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="withdrawAmount">Amount (Coins)</label>
+                                <input type="number" id="withdrawAmount" placeholder="Min 50 coins" min="50" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            Withdraw
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <div class="activity-empty">No recent activity</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal auth-modal">
+            <div class="modal-header">
+                <h2 id="authTitle">Login</h2>
+                <button class="modal-close" onclick="UI.hideAuthModal()">×</button>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-mode="login" onclick="UI.switchAuthTab('login')">Login</button>
+                <button class="auth-tab" data-mode="signup" onclick="UI.switchAuthTab('signup')">Sign Up</button>
+            </div>
+            <form class="auth-form" onsubmit="Auth.handleAuth(event)">
+                <div class="form-group" id="nameGroup" style="display: none;">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Your name">
+                </div>
+                <div class="form-group" id="referralGroup" style="display: none;">
+                    <label for="referralInput">Referral Code (Optional)</label>
+                    <input type="text" id="referralInput" placeholder="Enter referral code">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Min 6 characters" required>
+                </div>
+                <div class="form-group" id="confirmGroup" style="display: none;">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full" id="authSubmit">
+                    Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal profile-modal">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="modal-close" onclick="UI.hideProfileModal()">×</button>
+            </div>
+            <form class="profile-form" onsubmit="Profile.handleProfileUpdate(event)">
+                <div class="profile-pic-section">
+                    <img src="" alt="Profile" class="profile-pic-preview" id="profilePicPreview">
+                    <div class="profile-pic-actions">
+                        <label for="profilePicInput" class="btn btn-secondary">
+                            <span class="btn-icon">📷</span>
+                            Upload Photo
+                        </label>
+                        <input type="file" id="profilePicInput" accept="image/*" style="display: none;" onchange="Profile.handleProfilePicSelect(event)">
+                        <button type="button" class="btn btn-secondary" onclick="Profile.removeProfilePic()">
+                            <span class="btn-icon">🗑️</span>
+                            Remove
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="profileName">Name</label>
+                    <input type="text" id="profileName" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileUsername">Username</label>
+                    <input type="text" id="profileUsername" placeholder="@username" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="profileBio">Bio</label>
+                    <textarea id="profileBio" placeholder="Tell us about yourself..." rows="3" maxlength="200"></textarea>
+                    <div class="char-count"><span id="bioCharCount">0</span>/200</div>
+                </div>
+                <div class="form-group">
+                    <label for="profileEmail">Email</label>
+                    <input type="email" id="profileEmail" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="profileReferralCode">Referral Code</label>
+                    <input type="text" id="profileReferralCode" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc, increment, onSnapshot, collection, addDoc, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-storage.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCKvtEWdfIcrB6LuV9wTjtfZzksKT-v1XE",
+            authDomain: "referearn-6769b.firebaseapp.com",
+            projectId: "referearn-6769b",
+            storageBucket: "referearn-6769b.firebasestorage.app",
+            messagingSenderId: "418818490601",
+            appId: "1:418818490601:web:49e5b26acccc6efcb47078"
+        };
+
+        // Initialize Firebase (SINGLE INITIALIZATION)
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Make Firebase available globally
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+        window.firebaseStorage = storage;
+    </script>
+
+    <!-- App Modules -->
+    <script src="ui.js"></script>
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="earning.js"></script>
+    <script src="profile.js"></script>
+    
+    <!-- Initialize App -->
+    <script type="module">
+        // FIX: Remove duplicate onAuthStateChanged listener
+        // Auth module already handles this in setupAuthListener()
+        // This was causing duplicate listeners and login loop issues
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for referral code in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            if (refCode) {
+                const referralInput = document.getElementById('referralInput');
+                if (referralInput) {
+                    referralInput.value = refCode;
+                }
+            }
+            
+            // Auth module will handle auth state listener automatically
+            // No need to call onAuthStateChanged here
+        });
+    </script>
+</body>
+</html>
